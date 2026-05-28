@@ -57,20 +57,18 @@ app.get('/products/:id', async (req, res) => {
 
 app.post('/products', async (req, res) => {
     const {error} = await supabase
-        .from('products')
-        .insert({
+       .from('products')
+        .insert([{
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
-        })
+        }])
+        
     if (error) {
-        res.send(error);
+        return res.send(error); // Coloque o return aqui para não dar conflito
     }
     res.send("created!!");
     console.log("retorno "+ req.body.name);
-    console.log("retorno "+ req.body.description);
-    console.log("retorno "+ req.body.price);
-
 });
 
 app.put('/products/:id', async (req, res) => {
